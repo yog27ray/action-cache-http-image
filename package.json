@@ -1,0 +1,19 @@
+{
+  "name": "action-cache-http-image",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yog27ray/action-cache-http-image.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yog27ray/action-cache-http-image/issues"
+  },
+  "homepage": "https://github.com/yog27ray/action-cache-http-image#readme"
+}
