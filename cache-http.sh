@@ -12,6 +12,29 @@ echo INPUT_INSTALL_COMMAND: "$INPUT_INSTALL_COMMAND"
 echo INPUT_CACHE_HTTP_API: "$INPUT_CACHE_HTTP_API"
 echo INPUT_OPERATING_DIR: "$INPUT_OPERATING_DIR"
 echo INPUT_DISABLE_COMPRESSION: "$INPUT_DISABLE_COMPRESSION"
+echo INPUT_SSH_PRIVATE_KEY: "$INPUT_SSH_PRIVATE_KEY"
+echo INPUT_SSH_PUBLIC_KEY: "$INPUT_SSH_PUBLIC_KEY"
+
+if [ -n "$INPUT_SSH_PRIVATE_KEY" ] || [ -n "$INPUT_SSH_PUBLIC_KEY" ]; then
+    SSH_KEY_DIR="$HOME/.ssh"
+    echo "SSH key setup begin";
+    if [ ! -d "$SSH_KEY_DIR" ]; then
+      mkdir -p "$SSH_KEY_DIR"
+      chmod 700 "$SSH_KEY_DIR"
+    fi
+    if [ -n "$INPUT_SSH_PRIVATE_KEY" ]; then
+      echo "SSH key setup private key";
+      SSH_KEY_FILE="$SSH_KEY_DIR/id_rsa"
+      echo "$INPUT_SSH_PRIVATE_KEY" > "$SSH_KEY_FILE"
+      chmod 600 "$SSH_KEY_FILE"
+    fi
+    if [ -n "$INPUT_SSH_PUBLIC_KEY" ]; then
+      echo "SSH key setup public key";
+      SSH_PUBLIC_KEY_FILE="$SSH_KEY_DIR/id_rsa.pub"
+      echo "$INPUT_SSH_PUBLIC_KEY" > "$SSH_PUBLIC_KEY_FILE"
+      chmod 600 "$SSH_PUBLIC_KEY_FILE"
+    fi
+fi
 
 if [ -z "$INPUT_LOCK_FILE" ]; then
     echo "no lock file given"
