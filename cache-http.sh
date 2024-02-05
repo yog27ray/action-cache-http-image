@@ -34,6 +34,7 @@ if [ -n "$INPUT_SSH_PRIVATE_KEY" ] || [ -n "$INPUT_SSH_PUBLIC_KEY" ]; then
       echo "$INPUT_SSH_PUBLIC_KEY" > "$SSH_PUBLIC_KEY_FILE"
       chmod 600 "$SSH_PUBLIC_KEY_FILE"
     fi
+    echo "SSH key setup completed."
 fi
 
 if [ -z "$INPUT_LOCK_FILE" ]; then
