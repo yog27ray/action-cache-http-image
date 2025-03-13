@@ -60,7 +60,8 @@ curl \
     -x "$INPUT_HTTP_PROXY" \
     "$INPUT_CACHE_HTTP_API/health"
 
-chown ubuntu:ubuntu -R ./
+whoami
+ls -lah
 TEMP_FILE="$(date +%s%N).file"
 TEMP_FILE="temp.file"
 cp "$INPUT_LOCK_FILE" "$TEMP_FILE"
@@ -107,8 +108,6 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
-    whoami
-    ls -lah
     bash -c "$INPUT_INSTALL_COMMAND" && \
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER" && \
 
