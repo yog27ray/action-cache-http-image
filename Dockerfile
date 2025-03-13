@@ -10,7 +10,8 @@ ENV USERNAME=${USERNAME}
 ENV DEBIAN_FRONTEND=noninteractive
 
 # Create ubuntu user with sudo permission
-RUN usermod -aG sudo ${USERNAME} && \
+RUN useradd -m -s /bin/bash ${USERNAME} && \
+    usermod -aG sudo ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
     chown -R ${USERNAME}:${USERNAME} /usr/app
 
