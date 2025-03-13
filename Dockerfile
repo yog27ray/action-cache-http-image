@@ -4,7 +4,7 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install jq -y
 
 ARG USERNAME=ubuntu
 
-WORKDIR /usr/http-cache
+WORKDIR /usr/action-cache-http-image
 
 ENV USERNAME=${USERNAME}
 ENV DEBIAN_FRONTEND=noninteractive
@@ -13,7 +13,7 @@ ENV DEBIAN_FRONTEND=noninteractive
 RUN useradd -m -s /bin/bash ${USERNAME} && \
     usermod -aG sudo ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers && \
-    chown -R ${USERNAME}:${USERNAME} /usr/http-cache
+    chown -R ${USERNAME}:${USERNAME} /usr/action-cache-http-image
 
 USER ${USERNAME}
 
