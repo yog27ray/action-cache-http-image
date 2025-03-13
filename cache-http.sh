@@ -61,7 +61,7 @@ curl \
     "$INPUT_CACHE_HTTP_API/health"
 
 TEMP_FILE="$(date +%s%N).file"
-TEMP_FILE="/tmp/temp.file"
+TEMP_FILE="temp.file"
 cp "$INPUT_LOCK_FILE" "$TEMP_FILE"
 
 # Changing some value of some fields in package.json doesn't changes node_modules content for example version.
@@ -103,13 +103,12 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
-    sudo chown ubuntu:ubuntu -R "$INPUT_DESTINATION_FOLDER"
+    ls -lah
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
-    sudo mkdir "$INPUT_DESTINATION_FOLDER"
-    sudo chown ubuntu:ubuntu -R "$INPUT_DESTINATION_FOLDER"
     bash -c "$INPUT_INSTALL_COMMAND"
+    ls -lah
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
     echo "Cache miss, uploading"

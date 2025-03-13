@@ -7,13 +7,12 @@ WORKDIR /usr/action-cache-http-image
 RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y jq sudo
 
 # Define username
-ARG USERNAME=ubuntu
+ARG USERNAME=node
 
 RUN apt-get update && apt-get install -y sudo
 
 # Create the ubuntu user with sudo permissions
-RUN useradd -m -s /bin/bash ${USERNAME} && \
-    usermod -aG sudo ${USERNAME} && \
+RUN usermod -aG sudo ${USERNAME} && \
     echo "${USERNAME} ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers
 
 # Ensure all files in /usr/action-cache-http-image belong to ubuntu
