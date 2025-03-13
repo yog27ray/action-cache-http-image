@@ -112,8 +112,6 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
-    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
-    ls -lah
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
@@ -131,7 +129,7 @@ else
         "$INPUT_CACHE_HTTP_API/upload"
 
     echo "Cache miss, upload success"
-    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
-    ls -lah
 fi
 rm "$TEMP_FILE"
+sudo chown "$INPUT_USER:$INPUT_USER" -R ./
+ls -lah
