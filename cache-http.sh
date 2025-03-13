@@ -132,4 +132,3 @@ else
 fi
 rm "$TEMP_FILE"
 sudo chown "$INPUT_OWNERSHIP_USER_UID:$INPUT_OWNERSHIP_USER_UID" -R ./
-ls -lah
