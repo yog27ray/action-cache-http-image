@@ -61,7 +61,7 @@ curl \
     "$INPUT_CACHE_HTTP_API/health"
 
 TEMP_FILE="$(date +%s%N).file"
-TEMP_FILE="temp.file"
+TEMP_FILE="/tmp/temp.file"
 cp "$INPUT_LOCK_FILE" "$TEMP_FILE"
 
 # Changing some value of some fields in package.json doesn't changes node_modules content for example version.
