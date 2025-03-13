@@ -115,6 +115,8 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
+    whoami
+    ls -lah
     bash -c "$INPUT_INSTALL_COMMAND"
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
