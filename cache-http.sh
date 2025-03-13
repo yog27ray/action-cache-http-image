@@ -12,7 +12,7 @@ echo INPUT_INSTALL_COMMAND: "$INPUT_INSTALL_COMMAND"
 echo INPUT_CACHE_HTTP_API: "$INPUT_CACHE_HTTP_API"
 echo INPUT_OPERATING_DIR: "$INPUT_OPERATING_DIR"
 echo INPUT_DISABLE_COMPRESSION: "$INPUT_DISABLE_COMPRESSION"
-echo INPUT_USER: "$INPUT_USER"
+echo INPUT_OWNERSHIP_USER_UID: "$INPUT_OWNERSHIP_USER_UID"
 #echo INPUT_SSH_PRIVATE_KEY: "$INPUT_SSH_PRIVATE_KEY"
 #echo INPUT_SSH_PUBLIC_KEY: "$INPUT_SSH_PUBLIC_KEY"
 
@@ -43,12 +43,12 @@ if [ -z "$INPUT_LOCK_FILE" ]; then
     exit;
 fi
 
-if [ -z "$INPUT_USER" ]; then
-    INPUT_USER=ubuntu
+if [ -z "$INPUT_OWNERSHIP_USER_UID" ]; then
+    INPUT_OWNERSHIP_USER_UID=1000
 fi
 
-if ! id "$INPUT_USER" &>/dev/null; then
-    sudo useradd -m -s /bin/bash "$INPUT_USER"
+if ! id -u $INPUT_OWNERSHIP_USER_UID >/dev/null 2>&1; then \
+        useradd -u $INPUT_OWNERSHIP_USER_UID -m -s /bin/bash dummy-user; \
 fi
 
 if [ -n "$INPUT_OPERATING_DIR" ]; then
@@ -131,5 +131,5 @@ else
     echo "Cache miss, upload success"
 fi
 rm "$TEMP_FILE"
-sudo chown "$INPUT_USER:$INPUT_USER" -R ./
+sudo chown "$INPUT_OWNERSHIP_USER_UID:$INPUT_OWNERSHIP_USER_UID" -R ./
 ls -lah
