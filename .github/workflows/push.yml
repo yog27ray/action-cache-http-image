@@ -9,7 +9,7 @@ jobs:
   build:
     runs-on: self-hosted
     concurrency:
-      group: push-ubuntu-24.04-build-branch
+      group: push-build-branch
       cancel-in-progress: true
     steps:
       - name: Checkout code
