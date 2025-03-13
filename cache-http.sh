@@ -118,8 +118,6 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
 else
     echo "Cache miss"
     bash -c "$INPUT_INSTALL_COMMAND"
-    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
-    ls -lah
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
     echo "Cache miss, uploading"
@@ -133,5 +131,7 @@ else
         "$INPUT_CACHE_HTTP_API/upload"
 
     echo "Cache miss, upload success"
+    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
+    ls -lah
 fi
 rm "$TEMP_FILE"
