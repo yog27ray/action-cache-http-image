@@ -47,6 +47,10 @@ if [ -z "$INPUT_USER" ]; then
     INPUT_USER=ubuntu
 fi
 
+if ! id "$INPUT_USER" &>/dev/null; then
+    sudo useradd -m -s /bin/bash "$INPUT_USER"
+fi
+
 if [ -n "$INPUT_OPERATING_DIR" ]; then
     cd "$INPUT_OPERATING_DIR"
 fi
