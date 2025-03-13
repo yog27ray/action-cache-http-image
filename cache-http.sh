@@ -43,6 +43,10 @@ if [ -z "$INPUT_LOCK_FILE" ]; then
     exit;
 fi
 
+if [ -z "$INPUT_USER" ]; then
+    INPUT_USER=ubuntu
+fi
+
 if [ -n "$INPUT_OPERATING_DIR" ]; then
     cd "$INPUT_OPERATING_DIR"
 fi
@@ -104,17 +108,13 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
-    if [ -n "$INPUT_USER" ]; then
-       sudo chown "$INPUT_USER:$INPUT_USER" -R ./
-    fi
+    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
     ls -lah
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
     bash -c "$INPUT_INSTALL_COMMAND"
-    if [ -n "$INPUT_USER" ]; then
-       sudo chown "$INPUT_USER:$INPUT_USER" -R ./
-    fi
+    sudo chown "$INPUT_USER:$INPUT_USER" -R ./
     ls -lah
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
