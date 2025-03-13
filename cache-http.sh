@@ -105,7 +105,7 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
     if [ -n "$INPUT_USER" ]; then
-       chown "$INPUT_USER:$INPUT_USER" -R ./
+       sudo chown "$INPUT_USER:$INPUT_USER" -R ./
     fi
     ls -lah
     echo "Cache hit, untar success"
@@ -113,7 +113,7 @@ else
     echo "Cache miss"
     bash -c "$INPUT_INSTALL_COMMAND"
     if [ -n "$INPUT_USER" ]; then
-       chown "$INPUT_USER:$INPUT_USER" -R ./
+       sudo chown "$INPUT_USER:$INPUT_USER" -R ./
     fi
     ls -lah
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
