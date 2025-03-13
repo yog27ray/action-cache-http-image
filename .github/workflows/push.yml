@@ -1,4 +1,4 @@
-name: Push ubuntu-24.10
+name: Push Main
 run-name: ${{ github.event.number }} 🚀 ${{ github.event.head_commit.message }}
 on:
   push:
