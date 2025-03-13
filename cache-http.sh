@@ -60,13 +60,8 @@ curl \
     -x "$INPUT_HTTP_PROXY" \
     "$INPUT_CACHE_HTTP_API/health"
 
-pwd
-whoami
-ls -lah
-sudo chown ubuntu:ubuntu -R ./
-ls -lah
 TEMP_FILE="$(date +%s%N).file"
-TEMP_FILE="temp.file"
+TEMP_FILE="/tmp/temp.file"
 cp "$INPUT_LOCK_FILE" "$TEMP_FILE"
 
 # Changing some value of some fields in package.json doesn't changes node_modules content for example version.
@@ -108,13 +103,15 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
+    sudo chown ubuntu:ubuntu -R "$INPUT_DESTINATION_FOLDER"
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
-    bash -c "$INPUT_INSTALL_COMMAND" && \
-    tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER" && \
+    bash -c "$INPUT_INSTALL_COMMAND"
+    sudo chown ubuntu:ubuntu -R "$INPUT_DESTINATION_FOLDER"
+    tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
-    echo "Cache miss, uploading" && \
+    echo "Cache miss, uploading"
 
     curl \
         -u "$INPUT_BASIC_AUTH_USERNAME:$INPUT_BASIC_AUTH_PASSWORD" \
@@ -122,7 +119,7 @@ else
         -x "$INPUT_HTTP_PROXY" \
         -k \
         --form "file=@$tarFile" \
-        "$INPUT_CACHE_HTTP_API/upload" && \
+        "$INPUT_CACHE_HTTP_API/upload"
 
     echo "Cache miss, upload success"
 fi
