@@ -60,6 +60,7 @@ curl \
     -x "$INPUT_HTTP_PROXY" \
     "$INPUT_CACHE_HTTP_API/health"
 
+pwd
 whoami
 ls -lah
 TEMP_FILE="$(date +%s%N).file"
