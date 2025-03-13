@@ -63,6 +63,8 @@ curl \
 pwd
 whoami
 ls -lah
+sudo chown ubuntu:ubuntu -R ./
+ls -lah
 TEMP_FILE="$(date +%s%N).file"
 TEMP_FILE="temp.file"
 cp "$INPUT_LOCK_FILE" "$TEMP_FILE"

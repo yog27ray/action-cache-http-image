@@ -9,6 +9,8 @@ RUN DEBIAN_FRONTEND=noninteractive apt-get update && apt-get install -y jq sudo
 # Define username
 ARG USERNAME=ubuntu
 
+RUN apt-get update && apt-get install -y sudo
+
 # Create the ubuntu user with sudo permissions
 RUN useradd -m -s /bin/bash ${USERNAME} && \
     usermod -aG sudo ${USERNAME} && \
