@@ -12,6 +12,7 @@ echo INPUT_INSTALL_COMMAND: "$INPUT_INSTALL_COMMAND"
 echo INPUT_CACHE_HTTP_API: "$INPUT_CACHE_HTTP_API"
 echo INPUT_OPERATING_DIR: "$INPUT_OPERATING_DIR"
 echo INPUT_DISABLE_COMPRESSION: "$INPUT_DISABLE_COMPRESSION"
+echo INPUT_USER: "$INPUT_USER"
 #echo INPUT_SSH_PRIVATE_KEY: "$INPUT_SSH_PRIVATE_KEY"
 #echo INPUT_SSH_PUBLIC_KEY: "$INPUT_SSH_PUBLIC_KEY"
 
@@ -103,11 +104,17 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
     tar "${COMPRESS_FLAG}xf" "$tarFile"
+    if [ -n "$INPUT_USER" ]; then
+       chown "$INPUT_USER:$INPUT_USER" -R ./
+    fi
     ls -lah
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
     bash -c "$INPUT_INSTALL_COMMAND"
+    if [ -n "$INPUT_USER" ]; then
+       chown "$INPUT_USER:$INPUT_USER" -R ./
+    fi
     ls -lah
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
