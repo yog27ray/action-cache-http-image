@@ -20,6 +20,7 @@ RUN chown -R ${USERNAME}:${USERNAME} /usr/action-cache-http-image
 
 # Switch to the ubuntu user
 USER ${USERNAME}
+USER root
 
 # Set the working directory again to ensure permissions
 WORKDIR /usr/action-cache-http-image
