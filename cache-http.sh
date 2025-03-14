@@ -43,13 +43,13 @@ if [ -z "$INPUT_LOCK_FILE" ]; then
     exit;
 fi
 
-if [ -z "$INPUT_OWNERSHIP_USER_UID" ]; then
-    INPUT_OWNERSHIP_USER_UID=1000
-fi
+#if [ -z "$INPUT_OWNERSHIP_USER_UID" ]; then
+#    INPUT_OWNERSHIP_USER_UID=1000
+#fi
 
-if ! id -u $INPUT_OWNERSHIP_USER_UID >/dev/null 2>&1; then \
-        useradd -u $INPUT_OWNERSHIP_USER_UID -m -s /bin/bash dummy-user; \
-fi
+#if ! id -u $INPUT_OWNERSHIP_USER_UID >/dev/null 2>&1; then \
+#        useradd -u $INPUT_OWNERSHIP_USER_UID -m -s /bin/bash dummy-user; \
+#fi
 
 if [ -n "$INPUT_OPERATING_DIR" ]; then
     cd "$INPUT_OPERATING_DIR"
@@ -131,4 +131,6 @@ else
     echo "Cache miss, upload success"
 fi
 rm "$TEMP_FILE"
-sudo chown "$INPUT_OWNERSHIP_USER_UID:$INPUT_OWNERSHIP_USER_UID" -R ./
+if [ -n "$INPUT_OWNERSHIP_USER_UID" ]; then
+    sudo chown "$INPUT_OWNERSHIP_USER_UID:$INPUT_OWNERSHIP_USER_UID" -R ./
+fi
