@@ -22,6 +22,12 @@ RUN chown -R ${USERNAME}:${USERNAME} /usr/action-cache-http-image
 USER ${USERNAME}
 USER root
 
+# Java
+RUN wget https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-x64_bin.deb && apt install -y ./jdk-23.0.2_linux-x64_bin.deb && rm -f ./jdk-23.0.2_linux-x64_bin.deb
+
+ENV JAVA_HOME=/usr/lib/jvm/jdk-23
+ENV PATH="${JAVA_HOME}/bin:${PATH}"
+
 # Set the working directory again to ensure permissions
 WORKDIR /usr/action-cache-http-image
 
