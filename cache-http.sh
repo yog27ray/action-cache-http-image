@@ -116,6 +116,7 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
 else
     echo "Cache miss: $INPUT_DESTINATION_FOLDER"
     bash -c "$INPUT_INSTALL_COMMAND"
+    echo ">>>>>>>Destination Folder<<<<<<"
     ls -lah "$INPUT_DESTINATION_FOLDER"
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
