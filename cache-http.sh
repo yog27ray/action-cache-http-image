@@ -111,20 +111,12 @@ if [ "$response" = "200" ] || [ "$response" -eq 200 ]; then
         -k \
         "$INPUT_CACHE_HTTP_API/assets/$tarFile" \
         --output "$tarFile" && \
-    if [ "${INPUT_DESTINATION_FOLDER#/}" != "$INPUT_DESTINATION_FOLDER" ]; then
-        tar "${COMPRESS_FLAG}xf" "$tarFile" -C /
-    else
-        tar "${COMPRESS_FLAG}xf" "$tarFile"
-    fi
+    tar "${COMPRESS_FLAG}xf" "$tarFile"
     echo "Cache hit, untar success"
 else
     echo "Cache miss"
     bash -c "$INPUT_INSTALL_COMMAND"
-    if [ "${INPUT_DESTINATION_FOLDER#/}" != "$INPUT_DESTINATION_FOLDER" ]; then
-        tar "${COMPRESS_FLAG}cf" "$tarFile" -C / "${INPUT_DESTINATION_FOLDER#/}"
-    else
-        tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
-    fi
+    tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
     echo "Cache miss, uploading"
 
