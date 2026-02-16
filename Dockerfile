@@ -22,7 +22,10 @@ RUN chown -R ${USERNAME}:${USERNAME} /usr/action-cache-http-image
 USER ${USERNAME}
 USER root
 
-# Java
+# Java 17 (OpenJDK)
+RUN apt-get update && apt-get install -y openjdk-17-jdk
+
+# Java 23
 RUN wget https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-x64_bin.deb && apt install -y ./jdk-23.0.2_linux-x64_bin.deb && rm -f ./jdk-23.0.2_linux-x64_bin.deb
 
 ENV JAVA_HOME=/usr/lib/jvm/jdk-23
