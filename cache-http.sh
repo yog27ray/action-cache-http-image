@@ -117,6 +117,8 @@ else
     echo "Cache miss: $INPUT_DESTINATION_FOLDER"
     bash -c "$INPUT_INSTALL_COMMAND"
     echo ">>>>>>>Destination Folder<<<<<<"
+    pwd
+    ls -lah ./
     ls -lah "$INPUT_DESTINATION_FOLDER"
     tar "${COMPRESS_FLAG}cf" "$tarFile" "$INPUT_DESTINATION_FOLDER"
 
