@@ -1,4 +1,4 @@
-FROM node:20
+FROM node:24
 
 # Set the working directory
 WORKDIR /usr/action-cache-http-image
