@@ -25,15 +25,17 @@ USER root
 # Java 17 (OpenJDK)
 RUN apt-get update && apt-get install -y openjdk-17-jdk
 
-# Java 23
+# Java 23 (Oracle ships no aarch64 deb, use tar.gz there)
 ARG TARGETARCH
 RUN case "${TARGETARCH}" in \
-      amd64) DEB_ARCH=x64 ;; \
-      arm64) DEB_ARCH=aarch64 ;; \
+      amd64) wget -O jdk23.deb https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-x64_bin.deb && \
+             apt install -y ./jdk23.deb && rm -f ./jdk23.deb ;; \
+      arm64) wget -O jdk23.tar.gz https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-aarch64_bin.tar.gz && \
+             mkdir -p /usr/lib/jvm/jdk-23 && \
+             tar -xzf jdk23.tar.gz -C /usr/lib/jvm/jdk-23 --strip-components=1 && \
+             rm -f ./jdk23.tar.gz ;; \
       *) echo "unsupported arch: ${TARGETARCH}" >&2; exit 1 ;; \
-    esac && \
-    wget -O jdk23.deb "https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-${DEB_ARCH}_bin.deb" && \
-    apt install -y ./jdk23.deb && rm -f ./jdk23.deb
+    esac
 
 ENV JAVA_HOME=/usr/lib/jvm/jdk-23
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
