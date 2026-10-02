@@ -26,7 +26,14 @@ USER root
 RUN apt-get update && apt-get install -y openjdk-17-jdk
 
 # Java 23
-RUN wget https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-x64_bin.deb && apt install -y ./jdk-23.0.2_linux-x64_bin.deb && rm -f ./jdk-23.0.2_linux-x64_bin.deb
+ARG TARGETARCH
+RUN case "${TARGETARCH}" in \
+      amd64) DEB_ARCH=x64 ;; \
+      arm64) DEB_ARCH=aarch64 ;; \
+      *) echo "unsupported arch: ${TARGETARCH}" >&2; exit 1 ;; \
+    esac && \
+    wget -O jdk23.deb "https://download.oracle.com/java/23/archive/jdk-23.0.2_linux-${DEB_ARCH}_bin.deb" && \
+    apt install -y ./jdk23.deb && rm -f ./jdk23.deb
 
 ENV JAVA_HOME=/usr/lib/jvm/jdk-23
 ENV PATH="${JAVA_HOME}/bin:${PATH}"
